@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,15 +7,18 @@ public class Enemy : MonoBehaviour
 
     private GameObject player;
     private bool isRunning;
-    private Rigidbody enemyRb;
 
     void Start()
     {
-        enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
     }
 
     void Update()
+    {
+        EnemyMoveAndRotate();
+    }
+
+    private void EnemyMoveAndRotate()
     {
         Vector3 lookDirection = (player.transform.position - transform.position).normalized;
 

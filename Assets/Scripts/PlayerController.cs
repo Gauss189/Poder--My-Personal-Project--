@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float cooldownTime = 1.5f;
+  //  private float powerUpCooldownReduce = 1f;
     private float speed = 20f;
     private float rotationSpeed = 800f;
 
@@ -64,21 +65,28 @@ public class PlayerController : MonoBehaviour
 
     }
 
-  // private void OnTriggerEnter(Collider other)
-  // {
-  //     if (other.CompareTag("PowerUp"))
-  //     {
-  //         powerUp = true;
-  //         Destroy(other.gameObject);
-  //     }
-  // }
-
     IEnumerator PlayerArmedCooldown()
     {
         playerCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         playerCooldown = false;
     }
+    // Here i need create a method with couroutine
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("PowerUp"))
+    //     {
+    //         powerUp = true;
+    //         cooldownTime -= powerUpCooldownReduce;
+    //         Destroy(other.gameObject);
+    //     }
+    // }
+
+ // private void AttackSpeedPowerUp() { }
+ //
+ // IEnumerator AttackSpeedPowerUpTime() { 
+ // 
+ // }
 
     public bool IsRunning()
     {
