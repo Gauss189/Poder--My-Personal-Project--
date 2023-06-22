@@ -1168,8 +1168,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4704309934908222784, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
+      propertyPath: powerUp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704309934908222784, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
       propertyPath: rotationSpeed
       value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 4704309934908222784, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
+      propertyPath: playerCooldown
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4704309934908222785, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
       propertyPath: m_Mass
@@ -1205,7 +1213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4704309934908222847, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.015
       objectReference: {fileID: 0}
     - target: {fileID: 4704309934908222847, guid: f61258348ebd19c4996bb3277223a0c8, type: 3}
       propertyPath: m_LocalPosition.z

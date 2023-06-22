@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float cooldownTime = 1.5f;
-  //  private float powerUpCooldownReduce = 1f;
-    private float speed = 20f;
+   [SerializeField] private float cooldownTime;
+    private float basicCooldownTime = 1.5f;
+    private float powerUpCooldownReduce = 1f;
+    private float powerUpDuration = 5f;
+    private float speed = 16f;
     private float rotationSpeed = 800f;
 
     private Rigidbody playerRb;
 
     private bool isRunning;
-   // private bool powerUp = false;
-    private bool playerCooldown = false;
+    [SerializeField] private bool powerUp = false;
+    [SerializeField] private bool playerCooldown = false;
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        cooldownTime = basicCooldownTime;
     }
 
     void Update()
@@ -55,6 +58,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && !playerCooldown)
         {
             Destroy(collision.gameObject);
+            playerCooldown = true;
             StartCoroutine(PlayerArmedCooldown());
         }
         else if (collision.gameObject.CompareTag("Enemy") && playerCooldown)
@@ -65,28 +69,30 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PowerUp") && cooldownTime == basicCooldownTime)
+        {
+            Destroy(other.gameObject);
+            powerUp = true;
+
+            cooldownTime -= powerUpCooldownReduce;
+            StartCoroutine(AttackSpeedPowerUpTime());
+        }
+    }
+
     IEnumerator PlayerArmedCooldown()
     {
-        playerCooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         playerCooldown = false;
     }
-    // Here i need create a method with couroutine
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("PowerUp"))
-    //     {
-    //         powerUp = true;
-    //         cooldownTime -= powerUpCooldownReduce;
-    //         Destroy(other.gameObject);
-    //     }
-    // }
 
- // private void AttackSpeedPowerUp() { }
- //
- // IEnumerator AttackSpeedPowerUpTime() { 
- // 
- // }
+    IEnumerator AttackSpeedPowerUpTime()
+    {
+        yield return new WaitForSeconds(powerUpDuration);
+        powerUp = false;
+        cooldownTime = basicCooldownTime;
+    }
 
     public bool IsRunning()
     {
