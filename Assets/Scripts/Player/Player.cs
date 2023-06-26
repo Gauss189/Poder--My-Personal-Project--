@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField] private bool playerCooldown;
     [SerializeField] private float cooldownTime;
 
-    //private float knockBackForce = 500f;
+    [SerializeField] private float knockBackForce = 10000f;
+    [SerializeField] private float knockBackDuration = 0.5f;
     private float basicCooldownTime = 1.5f;
     private float powerUpCooldownReduce = 1f;
     private float powerUpDuration = 5f;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody playerRb;
     private bool isAttacking;
+    private bool isKnockback;
 
     private void Awake()
     {
@@ -37,17 +39,15 @@ public class Player : MonoBehaviour
             playerCooldown = true;
             StartCoroutine(PlayerArmedCooldown());
         }
-        else if (collision.gameObject.CompareTag("Enemy") && playerCooldown)
+        else if (collision.gameObject.CompareTag("Enemy") && playerCooldown && !isKnockback)
         {
             if (playerCurrentHealth > 0)
             {
-                playerCurrentHealth--;
+                --playerCurrentHealth;
 
-                //Doesn`t work well for now
-                // Vector3 knockBack = (collider.transform.position - transform.position).normalized;
-                // playerRb.AddForce(knockBack * knockBackForce * Time.fixedDeltaTime, ForceMode.Impulse);
+                StartCoroutine(KnockBackCoroutine());
             }
-            else if (playerCurrentHealth <= 0)
+            if (playerCurrentHealth <= 0)
             {
                 //Destroy(gameObject);
                 Debug.Log("Player Killed");
@@ -80,6 +80,17 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(powerUpDuration);
         powerUp = false;
         cooldownTime = basicCooldownTime;
+    }
+
+    private IEnumerator KnockBackCoroutine()
+    {
+        isKnockback = true;
+
+        Vector3 knockbackDirection = (transform.position - GameObject.FindGameObjectWithTag("Enemy").transform.position).normalized;
+        playerRb.AddForce(knockbackDirection * knockBackForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(knockBackDuration);
+        isKnockback = false;
     }
 
     public bool IsAttacking()

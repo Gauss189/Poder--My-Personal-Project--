@@ -154,6 +154,8 @@ MonoBehaviour:
   powerUp: 0
   playerCooldown: 0
   cooldownTime: 0
+  knockBackForce: 50
+  knockBackDuration: 0.3
   playerCurrentHealth: 0
 --- !u!1 &253369444
 GameObject:
