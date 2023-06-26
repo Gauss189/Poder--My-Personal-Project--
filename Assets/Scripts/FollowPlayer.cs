@@ -3,8 +3,8 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject player;
-    private float cameraHeight = 12f;
-    private float cameraDistance = -6f;
+    private float cameraHeight = 8f;
+    private float cameraDistance = -7f;
 
     private void Update()
     {
